@@ -1,17 +1,19 @@
 - name: Stop middleware services
-  ignore_erros: yes
+  ignore_errors: true
   service:
     name: "{{ item }}"
     state: stopped
   loop: "{{ middleware_services }}"
 
 - name: Remove middleware packages
+  ignore_errors: true
   apt:
     name: "{{ item }}"
     state: absent
     loop: "{{ middleware_services }}"
 
 - name: Remove configuration files
+  ignore_errors: true
   file:
     path: "{{ item }}"
     state: absent
