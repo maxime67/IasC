@@ -1,8 +1,6 @@
 ---
 - name: Install and Configure Apache
-  hosts: apache
   become: yes
-
   tasks:
     - name: Update APT package manager
       apt:
