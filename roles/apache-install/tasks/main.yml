@@ -1,55 +1,41 @@
 ---
-- name: Install and Configure Apache
-  become: yes
-  vars:
-    template_src: templates/vhost.conf.j2  # Ensure this variable is set
-    vhost_conf_file: /etc/apache2/sites-available/mywebsite.conf  # Define this variable
-    website_name: mywebsite.conf  # Define this variable
+- name: Update APT package manager
+  apt:
+    update_cache: yes
 
-  tasks:
-    - name: Update APT package manager
-      apt:
-        update_cache: yes
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
 
-    - name: Install ufw
-      apt:
-        name: ufw
-        state: present
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
 
-    - name: Install Apache
-      apt:
-        name: apache2
-        state: present
+- name: Copy virtual host configuration template
+  template:
+    src: "{{ template_src }}"
+    dest: "{{ vhost_conf_file }}"
+    owner: root
+    group: root
+    mode: '0644'
 
-    - name: Copy virtual host configuration template
-      template:
-        src: "{{ template_src }}"
-        dest: "{{ vhost_conf_file }}"
-        owner: root
-        group: root
-        mode: '0644'
+- name: Disable the default Apache site
+  command: a2dissite 000-default.conf
+  notify: restart apache
 
-    - name: Disable the default Apache site
-      command: a2dissite 000-default.conf
-      notify: restart apache
+- name: Enable the new virtual host configuration
+  command: a2ensite {{ website_name }}
+  notify: restart apache
 
-    - name: Enable the new virtual host configuration
-      command: a2ensite {{ website_name }}
-      notify: restart apache
+- name: Start Apache service
+  service:
+    name: apache2
+    state: started
+    enabled: yes
 
-    - name: Start Apache service
-      service:
-        name: apache2
-        state: started
-        enabled: yes
-
-    - name: Ensure UFW firewall allows Apache
-      ufw:
-        rule: allow
-        name: "Apache Full"
-
-  handlers:
-    - name: restart apache
-      service:
-        name: apache2
-        state: restarted
+- name: Ensure UFW firewall allows Apache
+  ufw:
+    rule: allow
+    name: "Apache Full"
