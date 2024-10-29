@@ -27,7 +27,7 @@
     mode: '0644'
 
 - name: Disable the default Apache site
-  ingnore_erros: true
+  ignore_errors: true
   command: a2dissite 000-default.conf
   notify: restart apache
 
