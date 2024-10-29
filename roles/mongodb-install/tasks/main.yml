@@ -13,10 +13,11 @@
 
 - name: Add MongoDB repository
   apt_repository:
-    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb-install.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-install-org/{{ mongodb_version }} multiverse"
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb/{{ mongodb_version }}/multiverse"
     state: present
-    filename: mongodb-install-org-{{ mongodb_version }}
+    filename: mongodb-org-{{ mongodb_version }}
   when: ansible_os_family == "Debian"
+  register: mongo_repo_add
 
 - name: Install MongoDB packages
   apt:
