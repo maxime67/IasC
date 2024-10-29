@@ -3,4 +3,5 @@
   hosts: apache
   become: yes
   roles:
+    - clean-vm
     - apache-install

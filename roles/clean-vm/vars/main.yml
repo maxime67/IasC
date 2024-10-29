@@ -1,0 +1,20 @@
+middleware_services:
+  - apache2
+  - nginx
+  - mysql
+  - postgresql
+  - mongod
+
+middleware_packages:
+    - apache2
+    - nginx
+    - mysql-server
+    - postgresql
+    - mongod
+
+config_files:
+    - /etc/apache2
+    - /etc/nginx
+    - /etc/mysql
+    - /etc/postgresql
+    - /var/lib/mongodb

@@ -1,0 +1,37 @@
+- name: Stop middleware services
+  service:
+    name: "{{ item }}"
+    state: stopped
+  loop: "{{ middleware_services }}"
+
+- name: Remove middleware packages
+  apt:
+    name: "{{ item }}"
+    state: absent
+    loop: "{{ middleware_services }}"
+
+- name: Remove configuration files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ config_files }}"
+
+
+- name: Clean up unused packages
+  apt:
+     autoremove: yes
+
+- name: Clean up APT cache
+  apt:
+     cleanup: yes
+
+- name: Reboot the VM
+  reboot:
+    msg: "Rebooting to finalize cleanup"
+    timeout: 300
+    test_command: whoami
+
+- name: Wait for the VM to come back up
+  wait_for:
+    timeout: 300
+    state: started
