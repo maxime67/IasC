@@ -16,7 +16,7 @@
 - name: Copy virtual host configuration template
   template:
     src: "{{ template_src }}"
-    dest: "{{ vhost_conf_file_name }}"
+    dest: "{{ vhost_conf_file }}"
     owner: root
     group: root
     mode: '0644'
@@ -26,7 +26,7 @@
   notify: restart apache
 
 - name: Enable the new virtual host configuration
-  command: a2ensite {{ vhost_conf_file }}
+  command: a2ensite {{ vhost_conf_file_name }}.conf
   notify: restart apache
 
 - name: Start Apache service
