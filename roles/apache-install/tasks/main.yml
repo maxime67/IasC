@@ -4,14 +4,16 @@
     update_cache: yes
 
 - name: Install ufw
-  apt:
+  ansible.builitin.apt:
     name: ufw
     state: present
+    update_cache: yes
 
 - name: Install Apache
-  apt:
+  ansible.builitin.apt:
     name: apache2
     state: latest
+    update_cache: yes
 
 - name: Ensure sites-available directories exist
   file:
