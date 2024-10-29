@@ -1,0 +1,9 @@
+mongodb_port: 27017
+mongodb_bind_ip: 0.0.0.0
+mongodb_version: "6.0"
+mongodb_package: mongodb-org
+mongodb_additional_packages:
+  - mongodb-org-server
+  - mongodb-org-shell
+  - mongodb-org-mongos
+  - mongodb-org-tools

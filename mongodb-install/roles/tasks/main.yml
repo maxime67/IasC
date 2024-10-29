@@ -1,0 +1,51 @@
+---
+- name: Add MongoDB GPG key
+  apt_key:
+    url: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add MongoDB repository
+  apt_repository:
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_version }} multiverse"
+    state: present
+    filename: mongodb-org-{{ mongodb_version }}
+  when: ansible_os_family == "Debian"
+
+- name: Install MongoDB packages
+  apt:
+    name: "{{ mongodb_additional_packages }}"
+    state: present
+    update_cache: yes
+  notify: restart mongodb
+
+- name: Create MongoDB data directory
+  file:
+    path: /var/lib/mongodb
+    state: directory
+    owner: mongodb
+    group: mongodb
+    mode: '0755'
+
+- name: Create MongoDB log directory
+  file:
+    path: /var/log/mongodb
+    state: directory
+    owner: mongodb
+    group: mongodb
+    mode: '0755'
+
+- name: Configure MongoDB
+  template:
+    src: mongod.conf.j2
+    dest: /etc/mongod.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart mongodb
+
+- name: Enable MongoDB service
+  systemd:
+    name: mongod
+    enabled: yes
+    state: started
