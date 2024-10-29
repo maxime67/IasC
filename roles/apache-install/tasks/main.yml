@@ -16,7 +16,7 @@
 - name: Copy virtual host configuration template
   template:
     src: "{{ template_src }}"
-    dest: "{{ vhost_conf_file }}"
+    dest: "{{ vhost_conf_file_name }}"
     owner: root
     group: root
     mode: '0644'
