@@ -1,4 +1,5 @@
 - name: Stop middleware services
+  ignore_erros: yes
   service:
     name: "{{ item }}"
     state: stopped
