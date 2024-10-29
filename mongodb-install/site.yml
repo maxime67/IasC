@@ -1,6 +1,6 @@
 ---
 - name: Install and configure MongoDB
-  hosts: servers
+  hosts: mongodb
   become: yes
   roles:
     - mongodb
