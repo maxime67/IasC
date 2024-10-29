@@ -4,13 +4,13 @@
     update_cache: yes
 
 - name: Install ufw
-  ansible.builitin.apt:
+  ansible.builtin.apt:
     name: ufw
     state: present
     update_cache: yes
 
 - name: Install Apache
-  ansible.builitin.apt:
+  ansible.builtin.apt:
     name: apache2
     state: latest
     update_cache: yes
