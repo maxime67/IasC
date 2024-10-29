@@ -1,6 +1,6 @@
 ---
 - name: Update APT package manager
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
 
 - name: Install ufw
@@ -14,16 +14,6 @@
     name: apache2
     state: latest
     update_cache: yes
-
-- name: Ensure sites-available directories exist
-  file:
-    path: /etc/apache2/sites-available
-    state: directory
-
-- name: Ensure sites-enabled directories exist
-  file:
-    path: /etc/apache2/sites-enabled
-    state: directory
 
 - name: Copy virtual host configuration template
   template:
