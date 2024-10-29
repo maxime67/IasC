@@ -13,9 +13,14 @@
     name: apache2
     state: latest
 
-- name: Ensure Apache directories exist
+- name: Ensure sites-available directories exist
   file:
     path: /etc/apache2/sites-available
+    state: directory
+
+- name: Ensure sites-enabled directories exist
+  file:
+    path: /etc/apache2/sites-enabled
     state: directory
 
 - name: Copy virtual host configuration template
