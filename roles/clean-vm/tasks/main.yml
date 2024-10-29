@@ -25,8 +25,7 @@
      autoremove: yes
 
 - name: Clean up APT cache
-  apt:
-     cleanup: yes
+  command: apt-get clean
 
 - name: Reboot the VM
   reboot:
