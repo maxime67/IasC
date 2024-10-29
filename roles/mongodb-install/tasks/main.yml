@@ -7,9 +7,9 @@
 
 - name: Add MongoDB repository
   apt_repository:
-    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_version }} multiverse"
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb-install.org/apt/ubuntu {{ ansible_distribution_release }}/mongodb-install-org/{{ mongodb_version }} multiverse"
     state: present
-    filename: mongodb-org-{{ mongodb_version }}
+    filename: mongodb-install-org-{{ mongodb_version }}
   when: ansible_os_family == "Debian"
 
 - name: Install MongoDB packages
@@ -17,22 +17,22 @@
     name: "{{ mongodb_additional_packages }}"
     state: present
     update_cache: yes
-  notify: restart mongodb
+  notify: restart mongodb-install
 
 - name: Create MongoDB data directory
   file:
-    path: /var/lib/mongodb
+    path: /var/lib/mongodb-install
     state: directory
-    owner: mongodb
-    group: mongodb
+    owner: mongodb-install
+    group: mongodb-install
     mode: '0755'
 
 - name: Create MongoDB log directory
   file:
-    path: /var/log/mongodb
+    path: /var/log/mongodb-install
     state: directory
-    owner: mongodb
-    group: mongodb
+    owner: mongodb-install
+    group: mongodb-install
     mode: '0755'
 
 - name: Configure MongoDB
@@ -42,7 +42,7 @@
     owner: root
     group: root
     mode: '0644'
-  notify: restart mongodb
+  notify: restart mongodb-install
 
 - name: Enable MongoDB service
   systemd:

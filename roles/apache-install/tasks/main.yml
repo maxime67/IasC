@@ -1,0 +1,46 @@
+---
+- name: Install and Configure Apache
+  hosts: apache
+  become: yes
+
+  tasks:
+    - name: Update APT package manager
+      apt:
+        update_cache: yes
+
+    - name: Install ufw
+      apt:
+        name: ufw
+        state: present
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Copy virtual host configuration template
+      template:
+        src: "{{ template_src }}"
+        dest: "{{ vhost_conf_file }}"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Disable the default Apache site
+      command: a2dissite 000-default.conf
+      notify: restart apache
+
+    - name: Enable the new virtual host configuration
+      command: a2ensite {{ website_name }}
+      notify: restart apache
+
+    - name: Start Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Ensure UFW firewall allows Apache
+      ufw:
+        rule: allow
+        name: "Apache Full"

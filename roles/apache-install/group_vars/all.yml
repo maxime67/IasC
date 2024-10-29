@@ -1,0 +1,7 @@
+apache_package: apache2
+apache_service: apache2
+vhost_conf_file: /etc/apache2/sites-available/{{ server_name }}.conf
+server_name: mywebsite.com
+document_root: /var/www/
+template_src: templates/vhost.conf.j2
+listen_port: 80
