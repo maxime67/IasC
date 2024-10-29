@@ -26,7 +26,7 @@
   notify: restart apache
 
 - name: Enable the new virtual host configuration
-  command: a2ensite {{ website_name }}
+  command: a2ensite {{ vhost_conf_file }}
   notify: restart apache
 
 - name: Start Apache service
