@@ -19,6 +19,10 @@
   when: ansible_os_family == "Debian"
   register: mongo_repo_add
 
+- name: Debug MongoDB repository add status
+  debug:
+    var: mongo_repo_add
+
 - name: Install MongoDB packages
   apt:
     name: "{{ mongodb_additional_packages }}"
