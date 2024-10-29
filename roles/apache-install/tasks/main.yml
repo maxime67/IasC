@@ -11,7 +11,12 @@
 - name: Install Apache
   apt:
     name: apache2
-    state: present
+    state: latest
+
+- name: Ensure Apache directories exist
+  file:
+    path: /etc/apache2/sites-available
+    state: directory
 
 - name: Copy virtual host configuration template
   template:
