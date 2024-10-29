@@ -4,4 +4,4 @@
   become: yes
   roles:
     - clean-vm
-    - apache-install
+    - mongodb-install
