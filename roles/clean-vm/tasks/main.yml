@@ -26,14 +26,3 @@
 
 - name: Clean up APT cache
   command: apt-get clean
-
-- name: Reboot the VM
-  reboot:
-    msg: "Rebooting to finalize cleanup"
-    timeout: 300
-    test_command: whoami
-
-- name: Wait for the VM to come back up
-  wait_for:
-    timeout: 300
-    state: started
