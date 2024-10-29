@@ -1,4 +1,10 @@
 ---
+- name: Install gnupg
+  ansible.builtin.apt:
+    name: gnupg
+    state: present
+    update_cache: yes
+
 - name: Add MongoDB GPG key
   apt_key:
     url: https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc
