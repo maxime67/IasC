@@ -12,14 +12,6 @@
     state: absent
     loop: "{{ middleware_services }}"
 
-- name: Remove configuration files
-  ignore_errors: true
-  file:
-    path: "{{ item }}"
-    state: absent
-  loop: "{{ config_files }}"
-
-
 - name: Clean up unused packages
   apt:
      autoremove: yes
